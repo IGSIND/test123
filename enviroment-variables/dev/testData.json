@@ -1,0 +1,21 @@
+{
+    "UserEmail": "",
+    "UserPassword": "",
+    "Api":"",
+    "dbUsername":"",
+    "dbPassword":"",
+    "dbServerName":"",
+    "dbPort":null,
+    "dbName":"",
+    "cadidateURL":"",
+    "invigilatorUsername":"",
+    "invigilatorPassword":"",
+    "invigilatorName":"",
+    "clientId":"",
+    "clientUsername":"",
+    "clientFirstname":"",
+    "clientLastname":"",
+    "clientEmail":"",
+    "clientPhone":"",
+    "clientVenue":""
+}

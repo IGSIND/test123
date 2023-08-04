@@ -1,0 +1,35 @@
+{
+   "action": {
+      "default_icon": {
+         "32": "assets/img/32x32.png"
+      },
+      "default_title": "iProctor Extension"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "default_locale": "en",
+   "description": "iProctoring solutions",
+   "differential_fingerprint": "1.79f12fa57307a442fe404fbb953433f82828a6f54b6bbce814d346ba6d8a0dba",
+   "externally_connectable": {
+      "matches": [ "http://*/*", "https://*/*" ]
+   },
+   "homepage_url": "http://chrome.google.com/webstore",
+   "host_permissions": [ "http://*/*", "https://*/*" ],
+   "icons": {
+      "128": "assets/img/128x128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOnqd5RlvGY5dxZ0fDYiNiH2Tv5d1HzcI/yKj7JSp5Vd4ftkV0dLeDUpGbLuPzuio+4uP2zIlySF9sxW42H79hnjOgzTa11TKdY2Xq1yM446suCUAVWOiBAoYzAH98lCDPYaKTr0H3wkWkNaAieM/d6U/tpHBSVW64HcqeDJMWmG1PZ6+13BeaHLNXBcxzbJ6eNn+SwS60M9w9rNuN0w/45abmuGdhYHXaHpKCpN+e+VWocEiRjTIzU9XoPlL5dcPo8NVGyVke+iVlNJqepsRYPMP5jRpzvzO7jlXeY4USCnrwwmeXg9A7azC0B1CcgKeqta6YLYkFUIzs4K1azhzQIDAQAB",
+   "manifest_version": 3,
+   "minimum_chrome_version": "109",
+   "name": "iProctor Extension",
+   "permissions": [ "tabs", "storage", "scripting", "activeTab", "offscreen", "management" ],
+   "short_name": "iProctor Extension",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.2",
+   "version_name": "1.0.2",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "cameraSources.html", "cameraSources.js", "audioSources.html", "audioSources.js", "blocker.html", "assets/hardware/recording.gif" ]
+   } ]
+}

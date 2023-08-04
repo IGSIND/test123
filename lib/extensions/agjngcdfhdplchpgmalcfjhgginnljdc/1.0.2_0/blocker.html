@@ -1,0 +1,20 @@
+<style>.blocker-container {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        background-color: white;
+    }
+
+    .txt-center {
+        text-align: center;
+    }</style><div class="blocker-container"><p class="txt-center">your camera has been disconnected. Please contact administrator</p><button type="button" id="screenShareBtn">Allow Screen Share</button></div><!-- 
+<script>
+
+    document.getElementById("screenShareBtn").addEventListener("click", allowScreenShare);
+
+    function allowScreenShare() {
+        console.log("allow screen share");
+        chrome.runtime.sendMessage({type : "SCREEN_SHARE"});
+    }
+
+</script> -->
