@@ -3,7 +3,7 @@ name: Secrets Scanning and Synk
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main  # DEvsecops
 
 jobs:
   secrets_scan:
