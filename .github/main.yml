@@ -1,45 +1,78 @@
-name: Secrets Scanning and Synk
-
-on:
+name: Security Test Pipeline
+'on':
   push:
     branches:
-      - main  # DEvsecops
-
+      - main
 jobs:
-  secrets_scan:
-    name: Secrets Scanning
+  scan_secrets:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          node-version: '14'  # Choose the desired Node.js version
-
+          python-version: 3.x
       - name: Install dependencies
-        run: npm install
-
-      - name: Run secrets scanning
-        run: npm run scan-secrets  # Replace with your scanning script or command
-
-  secrets_sync:
-    name: Secrets Synchronization
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+        run: |
+          pip install detect-secrets
+      - name: Scan for secrets
+        run: |
+          detect-secrets scan --all-files
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
         with:
-          node-version: '14'  # Choose the desired Node.js version
+          args: '--sarif-file-output=snyk.sarif'
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+      - name: Set up Docker
+        run: |
+          docker --version
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+      - name: Login to Docker Hub
+        run: >-
+          docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{
+          secrets.DOCKER_HUB_PASSWORD }}
+      - name: Build Docker Image
+        run: 'docker build -t your-image-name:latest .'
+      - name: Push Docker Image
+        run: 'docker push your-image-name:latest'
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-region: ap-south-1
+      - name: Login to Amazon ECR
+        run: >-
+          aws ecr get-login-password --region us-east-1 | docker login
+          --username AWS --password-stdin
+          YOUR_AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+        env:
+          AWS_ACCOUNT_ID: '${{ secrets.AWS_ACCOUNT_ID }}'
+      - name: Build and tag Docker image
+        run: >
+          docker build -t my-docker-image:latest .
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Sync secrets with Snyk
-        run: npm run sync-secrets  # Replace with your synchronization script or command
+          docker tag my-docker-image:latest ${{ secrets.AWS_ACCOUNT_ID
+          }}.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo:latest
+        env:
+          AWS_ACCOUNT_ID: '${{ secrets.AWS_ACCOUNT_ID }}'
+      - name: Push Docker image to ECR
+        run: >
+          docker push ${{ secrets.AWS_ACCOUNT_ID
+          }}.dkr.ecr.us-east-1.amazonaws.com/my-ecr-repo:latest
+        env:
+          AWS_ACCOUNT_ID: '${{ secrets.AWS_ACCOUNT_ID }}'
+      - name: Qualys Scanning
+        run: |
+          # Authenticate with Qualys using your credentials (e.g., API token)
+        env: null
+        QUALYS_API_TOKEN: '${{ secrets.QUALYS_API_TOKEN }}'
