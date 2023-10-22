@@ -7,3 +7,7 @@ Downloads/
 html-report.zip
 har/
 sonar-project.properties
+/lib/
+/logs/
+/temp/
+/ReadMeImages/
