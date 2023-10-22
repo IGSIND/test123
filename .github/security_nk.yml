@@ -76,3 +76,4 @@ jobs:
           # Authenticate with Qualys using your credentials (e.g., API token)
         env: null
         QUALYS_API_TOKEN: '${{ secrets.QUALYS_API_TOKEN }}'
+
