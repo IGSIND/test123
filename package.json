@@ -28,7 +28,7 @@
     "adm-zip": "^0.5.10",
     "allure-playwright": "^2.1.0",
     "cross-env": "^7.0.3",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "email-generator": "^1.0.1",
     "eslint": "^8.38.0",
     "eslint-plugin-import": "^2.27.5",
